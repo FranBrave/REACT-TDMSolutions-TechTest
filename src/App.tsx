@@ -1,23 +1,19 @@
 import React from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
 
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/lib/integration/react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from 'pages/Home/Home';
+import Login from 'pages/Login/Login';
 
-import Home from 'pages/Home';
-import store, { persistor } from 'redux/store';
-import MuiThemeProvider from 'theme';
 const App: React.FC = () => {
   return (
-    <Router>
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <MuiThemeProvider>
-            <Home />
-          </MuiThemeProvider>
-        </PersistGate>
-      </Provider>
-    </Router>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </Router>
+    </>
   );
 };
 

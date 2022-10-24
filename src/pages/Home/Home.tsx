@@ -1,58 +1,29 @@
 import React from 'react';
 
-import { Button, Switch, Typography, CircularProgress } from '@mui/material';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 
-import { useCustomSelector, useCustomDispatch } from 'hooks/redux';
-import { login } from 'redux/slices/auth';
-import { setThemeMode } from 'redux/slices/settings';
+import Header from './Header';
 
-import {
-  AppbarStyled,
-  AppbarContainerStyed,
-  BodyContainerStyed,
-  CardStyed
-} from './HomeStyled';
+import store, { persistor } from 'redux/store';
+import MuiThemeProvider from 'theme';
+import { Box, Typography } from '@mui/material';
 
-const Home: React.FC = () => {
-  const {
-    auth: { accessToken, isLoading },
-    settings: { themeMode }
-  } = useCustomSelector((state) => state);
-  const dispatch = useCustomDispatch();
-
-  console.log(accessToken);
-
-  const handleLogin = (): void => {
-    dispatch(
-      login({
-        email: 'eve.holt@reqres.in',
-        password: 'cityslicka'
-      })
-    );
-  };
-
-  const handleChangeTheme = (): void => {
-    dispatch(setThemeMode(themeMode === 'dark' ? 'light' : 'dark'));
-  };
-
+const App: React.FC = () => {
   return (
-    <div>
-      <AppbarStyled>
-        <AppbarContainerStyed>
-          <Typography variant="h6">TDM-Solutions Tech Test</Typography>
-          <Switch onChange={handleChangeTheme} />
-        </AppbarContainerStyed>
-      </AppbarStyled>
-      <BodyContainerStyed>
-        <CardStyed>
-          <Button variant="contained" onClick={handleLogin}>
-            Login
-          </Button>
-          {isLoading && <CircularProgress size={24} />}
-        </CardStyed>
-      </BodyContainerStyed>
-    </div>
+    <>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <MuiThemeProvider>
+            <Header />
+          </MuiThemeProvider>
+        </PersistGate>
+      </Provider>
+      <Box>
+        <Typography>You have to be logged to see the container</Typography>
+      </Box>
+    </>
   );
 };
 
-export default Home;
+export default App;
