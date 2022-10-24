@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { Provider } from 'react-redux';
+import store, { persistor } from 'redux/store';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 
 import Header from './Header';
 
-import store, { persistor } from 'redux/store';
 import MuiThemeProvider from 'theme';
 import { Box, Typography } from '@mui/material';
 

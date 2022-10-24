@@ -40,7 +40,7 @@ export const login =
   async (dispatch): Promise<AxiosResponse | AxiosError> => {
     dispatch(setIsLoading(true));
     try {
-      const response: AxiosResponse = await axios.post('/login', data);
+      const response: AxiosResponse = await axios.post('/', data);
       dispatch(setAccessToken(response.data.token));
       return response;
     } catch (error) {
