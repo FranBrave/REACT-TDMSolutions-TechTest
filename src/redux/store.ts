@@ -4,6 +4,8 @@ import storage from 'redux-persist/lib/storage';
 
 import authReducer from './slices/auth';
 import settingsReducer from './slices/settings';
+import userReducer from './slices/users';
+import searchReducer from './slices/search';
 
 const persistAuthConfig = {
   key: 'auth',
@@ -17,6 +19,12 @@ const persistSettingsConfig = {
   whitelist: ['themeMode']
 };
 
+const persistUserConfig = {
+  key: 'user',
+  storage,
+  whitelist: ['userList']
+};
+
 const store = configureStore({
   reducer: {
     auth: persistReducer<ReturnType<typeof authReducer>>(
@@ -26,6 +34,14 @@ const store = configureStore({
     settings: persistReducer<ReturnType<typeof settingsReducer>>(
       persistSettingsConfig,
       settingsReducer
+    ),
+    user: persistReducer<ReturnType<typeof userReducer>>(
+      persistUserConfig,
+      userReducer
+    ),
+    search: persistReducer<ReturnType<typeof searchReducer>>(
+      persistUserConfig,
+      searchReducer
     )
   },
   middleware: (defaultMddleware) =>

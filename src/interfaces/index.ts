@@ -1,10 +1,10 @@
 import { SettingsState } from './../redux/slices/settings/index';
+
 export interface User {
   email: string;
   first_name: string;
   last_name: string;
   avatar: string;
-  id: number;
 }
 
 export interface Login {
@@ -21,4 +21,8 @@ export interface AuthState {
 export interface GlobalState {
   auth: AuthState;
   settings: SettingsState;
+}
+
+export interface Search {
+  searchUser: [];
 }
