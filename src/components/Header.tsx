@@ -20,12 +20,11 @@ import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const {
-    auth: { accessToken },
     settings: { themeMode }
   } = useCustomSelector((state) => state);
   const dispatch = useCustomDispatch();
 
-  console.log(accessToken);
+  // console.log(accessToken);
 
   const handleChangeTheme = (): void => {
     dispatch(setThemeMode(themeMode === 'dark' ? 'light' : 'dark'));

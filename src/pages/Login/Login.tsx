@@ -17,6 +17,12 @@ import { useState, SyntheticEvent } from 'react';
 import { login } from 'redux/slices/auth';
 import { useCustomDispatch, useCustomSelector } from 'hooks/redux';
 
+import { Provider } from 'react-redux';
+import store, { persistor } from 'redux/store';
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import MuiThemeProvider from 'theme';
+import Header from 'components/Header';
+
 const theme = createTheme();
 
 export default function Login(): any {
@@ -45,6 +51,13 @@ export default function Login(): any {
 
   return (
     <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <MuiThemeProvider>
+            <Header />
+          </MuiThemeProvider>
+        </PersistGate>
+      </Provider>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

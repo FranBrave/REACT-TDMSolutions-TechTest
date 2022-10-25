@@ -4,7 +4,17 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const Footer: React.FC = () => {
   return (
-    <Typography align="center">
+    <Typography
+      align="center"
+      sx={{
+        position: 'fixed',
+        left: '0px',
+        bottom: '0px',
+        height: '30px',
+        width: '100%',
+        mt: '2rem'
+      }}
+    >
       Made with <FavoriteIcon /> by Fran{' '}
     </Typography>
   );

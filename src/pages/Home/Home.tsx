@@ -1,17 +1,15 @@
 import React from 'react';
 
+import { Box, Grid } from '@mui/material';
 import { Provider } from 'react-redux';
 import store, { persistor } from 'redux/store';
 import { PersistGate } from 'redux-persist/lib/integration/react';
-
-import Header from './Header';
-
 import MuiThemeProvider from 'theme';
-import { Box, Typography } from '@mui/material';
+import Header from 'components/Header';
 
-const App: React.FC = () => {
+const Home: React.FC = () => {
   return (
-    <>
+    <Box>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <MuiThemeProvider>
@@ -19,11 +17,11 @@ const App: React.FC = () => {
           </MuiThemeProvider>
         </PersistGate>
       </Provider>
-      <Box>
-        <Typography>You have to be logged to see the container</Typography>
-      </Box>
-    </>
+      <Grid>
+        <h1>You are at Home</h1>;
+      </Grid>
+    </Box>
   );
 };
 
-export default App;
+export default Home;

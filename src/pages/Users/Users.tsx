@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../Home/Header';
+import Header from '../../components/Header';
 import { Provider } from 'react-redux';
 import store, { persistor } from 'redux/store';
 import { PersistGate } from 'redux-persist/lib/integration/react';
@@ -29,13 +29,7 @@ const Users: React.FC = () => {
           </PersistGate>
         </Provider>
         <Grid>
-          {users.map((user) => {
-            return (
-              <li key={user}>
-                <h2>{user.email}</h2>
-              </li>
-            );
-          })}
+          <h1>You are at Users</h1>;
         </Grid>
       </>
     </>
