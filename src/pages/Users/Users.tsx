@@ -8,30 +8,37 @@ import Axios from 'axios';
 import Grid from '@mui/material/Grid';
 
 const Users: React.FC = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<any[]>([]);
   useEffect(() => {
     Axios.get('https://reqres.in/api/users?page=1&per_page=6').then(
       (response) => {
         setUsers(response.data);
+        // console.log(users.data);
       }
     );
   }, []);
 
   return (
     <>
-      {users.length > 0}
-      <>
-        <Provider store={store}>
-          <PersistGate persistor={persistor}>
-            <MuiThemeProvider>
-              <Header />
-            </MuiThemeProvider>
-          </PersistGate>
-        </Provider>
-        <Grid>
-          <h1>You are at Users</h1>;
-        </Grid>
-      </>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <MuiThemeProvider>
+            <Header />
+          </MuiThemeProvider>
+        </PersistGate>
+      </Provider>
+      <Grid>
+        {users?.length > 0 ? (
+          <ul>
+            {users.map((user, i) => (
+              <li key={i}>{user.email}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>No users to display</p>
+        )}
+        ;
+      </Grid>
     </>
   );
 };
