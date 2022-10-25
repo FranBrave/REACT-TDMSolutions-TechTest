@@ -1,21 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AxiosResponse, AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 
 import axios from 'utils/axios';
 import { Thunk } from 'redux/store';
-
-export interface AuthState {
-  accessToken: string | null;
-  isLoading: boolean;
-}
-
-export interface Login {
-  email: string;
-  password: string;
-}
+import { AuthState, Login } from 'interfaces';
 
 const initialState: AuthState = {
-  accessToken: null,
+  accessToken: false,
   isLoading: false
 };
 
@@ -23,7 +14,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setAccessToken: (state, action: PayloadAction<string | null>) => {
+    setAccessToken: (state, action: PayloadAction<string | false>) => {
       state.accessToken = action.payload;
     },
     setIsLoading: (state, action: PayloadAction<boolean>) => {
@@ -44,6 +35,7 @@ export const login =
       dispatch(setAccessToken(response.data.token));
       return response;
     } catch (error) {
+      dispatch(setAccessToken(false));
       return error as AxiosError;
     } finally {
       dispatch(setIsLoading(false));

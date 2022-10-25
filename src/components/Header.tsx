@@ -17,6 +17,7 @@ import { useCustomSelector, useCustomDispatch } from 'hooks/redux';
 
 import { setThemeMode } from 'redux/slices/settings';
 import { Link } from 'react-router-dom';
+import { setAccessToken } from 'redux/slices/auth';
 
 const Header: React.FC = () => {
   const {
@@ -24,10 +25,12 @@ const Header: React.FC = () => {
   } = useCustomSelector((state) => state);
   const dispatch = useCustomDispatch();
 
-  // console.log(accessToken);
-
   const handleChangeTheme = (): void => {
     dispatch(setThemeMode(themeMode === 'dark' ? 'light' : 'dark'));
+  };
+
+  const logout = (): void => {
+    dispatch(setAccessToken(false));
   };
 
   return (
@@ -54,8 +57,9 @@ const Header: React.FC = () => {
               to="/login"
               variant="contained"
               color="primary"
+              onClick={logout}
             >
-              Login
+              Logout
             </Button>
             <LightModeIcon />
             <Switch onChange={handleChangeTheme} />

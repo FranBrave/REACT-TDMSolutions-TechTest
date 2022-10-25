@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState, SyntheticEvent } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,42 +12,43 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState, SyntheticEvent } from 'react';
 
 import { login } from 'redux/slices/auth';
-import { useCustomDispatch, useCustomSelector } from 'hooks/redux';
+import { useCustomDispatch } from 'hooks/redux';
 
 import { Provider } from 'react-redux';
 import store, { persistor } from 'redux/store';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import MuiThemeProvider from 'theme';
 import Header from 'components/Header';
+import { useUserLogged } from 'hooks/useUserLogged';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
 export default function Login(): any {
-  const handleSubmit = (e: SyntheticEvent): any => {
-    e.preventDefault();
-  };
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const {
-    auth: { accessToken }
-  } = useCustomSelector((state) => state);
+  const auth = useUserLogged();
+  const navigate = useNavigate();
   const dispatch = useCustomDispatch();
 
-  console.log(accessToken);
-
-  const handleLogin = (): void => {
+  const handleSubmit = (e: SyntheticEvent): any => {
+    e.preventDefault();
     dispatch(
       login({
-        email: 'eve.holt@reqres.in',
-        password: 'cityslicka'
+        email,
+        password
       })
     );
   };
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  useEffect(() => {
+    if (auth) {
+      navigate('/users');
+    }
+  }, [auth, navigate]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -112,10 +113,10 @@ export default function Login(): any {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={handleLogin}
             >
               Sign In
             </Button>
+            {!auth && <p>Error: incorrect email or password</p>}
             <Grid container>
               <Grid item>
                 <Link href="/" variant="body2">
